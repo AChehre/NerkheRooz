@@ -9,12 +9,6 @@ async function getPrices() {
 	);
 
 	return results;
-	// const combined = {};
-	// for (const [key, result] of results) {
-	// 	combined[key] = result.success ? result.data : { error: result.error };
-	// }
-	
-	// return combined;
 }
 
 module.exports = { getPrices };
