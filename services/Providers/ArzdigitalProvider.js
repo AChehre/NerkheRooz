@@ -1,10 +1,12 @@
 const cheerio = require("cheerio");
 
+const { AssetType } = require("../assetTypes");
+
 async function getArzdigitalPrices() {
   try {
     const url = "https://arzdigital.com/";
     const res = await fetch(url, {
-      headers: { "User-Agent": "Mozilla/5.0 (compatible; MyScraper/1.0)" }
+      headers: { "User-Agent": "Mozilla/5.0 (compatible; MyScraper/1.0)" },
     });
 
     if (!res.ok) throw new Error(`Failed: ${res.status}`);
@@ -14,15 +16,13 @@ async function getArzdigitalPrices() {
 
     let priceText = null;
 
-
     const row = $('tr[data-slug="tether"]');
 
     if (row.length === 0) {
       throw new Error("USDT row not found");
     }
 
-  
-    priceText = row.find("div.pricetoman").text().trim();  // Example: "۱۱۳,۷۳۱ ت"
+    priceText = row.find("div.pricetoman").text().trim(); // Example: "۱۱۳,۷۳۱ ت"
 
     if (!priceText) {
       throw new Error("USDT price not found");
@@ -43,16 +43,21 @@ async function getArzdigitalPrices() {
       success: true,
       data: [
         {
-          type: "USDTTMN",
+          type: AssetType.USDT,
           price,
-          timestamp: new Date()
-        }
-      ]
+          timestamp: new Date(),
+        },
+      ],
     };
-
   } catch (err) {
     return { success: false, error: err.message };
   }
 }
 
-module.exports = { getArzdigitalPrices };
+const arzdigitalService = {
+  title: "Arzdigital",
+  service: getArzdigitalPrices,
+  assets: [AssetType.USDT, AssetType.BITCOIN],
+};
+
+module.exports = { arzdigitalService };

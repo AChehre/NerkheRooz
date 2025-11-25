@@ -1,15 +1,15 @@
-const { getTgjuPrices } = require('./getTgjuPricesService');
-const { getWallexPrices } = require('./getWallexPricesService');
-const { getNobitexPrices } = require('./getNobitexPricesService');
-const { getBitpinPrices } = require('./getBitpinPricesService');
-const { getArzdigitalPrices } = require('./getArzdigitalService');
+const { arzdigitalService } = require("./Providers/ArzdigitalProvider");
+const { bitpinService } = require("./Providers/BitpinProvider");
+const { nobitexService } = require("./Providers/NobitexProvider");
+const { tgjuService } = require("./Providers/TgjuProvider");
+const { wallexService } = require("./Providers/WallexProvider");
 
 const services = {
-	tgju: getTgjuPrices,
-	wallex: getWallexPrices,
-	nobitex: getNobitexPrices,
-	bitpin: getBitpinPrices,
-	arzdigital: getArzdigitalPrices,
+  arzdigitalService: arzdigitalService,
+  bitpinService: bitpinService,
+  nobitexService: nobitexService,
+  tgjuService: tgjuService,
+  wallexService: wallexService,
 };
 
 module.exports = { services };
