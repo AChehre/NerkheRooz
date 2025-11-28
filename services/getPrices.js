@@ -7,7 +7,7 @@ async function getPrices(assets = []) {
 
     // Otherwise include only services matching at least one asset
     return service.assets?.some((a) =>
-      assets.map((x) => x.toLowerCase()).includes(a.toLowerCase())
+      assets.map((x) => x.toLowerCase()).includes(a.symbol.toLowerCase())
     );
   });
 
@@ -17,10 +17,10 @@ async function getPrices(assets = []) {
       const result = await fn();
 
       return [
-        service.title,
+        service.provider.name,
         {
           result,
-          title: service.title,
+          provider: service.provider,
           assets: service.assets,
         },
       ];

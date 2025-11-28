@@ -2,9 +2,14 @@ const cheerio = require("cheerio");
 
 const { AssetType } = require("../assetTypes");
 
+const provider = Object.freeze({
+  name: "Arzdigital",
+  title: "ارزدیجیتال",
+});
+
 const items = [
   { asset: AssetType.USDT, dataSlug: "tether" },
-  { asset: AssetType.BITCOIN, dataSlug: "bitcoin" },
+  { asset: AssetType.BTC, dataSlug: "bitcoin" },
 ];
 
 async function getArzdigitalPrices() {
@@ -58,7 +63,7 @@ function getPrice(row, asset) {
 }
 
 const arzdigitalService = {
-  title: "Arzdigital",
+  provider: provider,
   service: getArzdigitalPrices,
   assets: items.map((i) => i.asset),
 };

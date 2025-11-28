@@ -19,13 +19,13 @@ app.get("/", async (req, res) => {
 
 Object.entries(services).forEach(([key, service]) => {
   const fn = service.service;
-  const title = service.title;
-  app.get(`/${title}`, async (req, res) => {
+  const serviceName = service.provider.name;
+  app.get(`/${serviceName}`, async (req, res) => {
     const result = await fn();
     if (result.success) {
       res.json({
         result: result.data,
-        title: service.title,
+        provider: service.provider,
         assets: service.assets,
       });
     } else {

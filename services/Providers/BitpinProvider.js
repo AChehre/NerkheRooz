@@ -2,9 +2,14 @@ const axios = require("axios");
 
 const { AssetType } = require("../assetTypes");
 
+const provider = Object.freeze({
+  name: "Bitpin",
+  title: "بیت‌پین",
+});
+
 const items = [
   { asset: AssetType.USDT, symbol: "USDT_IRT" },
-  { asset: AssetType.BITCOIN, symbol: "BTC_IRT" },
+  { asset: AssetType.BTC, symbol: "BTC_IRT" },
 ];
 
 async function getBitpinPrices() {
@@ -38,7 +43,7 @@ async function getBitpinPrices() {
 }
 
 const bitpinService = {
-  title: "Bitpin",
+  provider: provider,
   service: getBitpinPrices,
   assets: items.map((x) => x.asset),
 };

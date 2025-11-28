@@ -2,11 +2,16 @@ const cheerio = require("cheerio");
 
 const { AssetType } = require("../assetTypes");
 
+const provider = Object.freeze({
+  name: "Tgju",
+  title: "Tgju",
+});
+
 const items = [
   { title: "تتر", asset: AssetType.USDT },
-  // { title: "بیت کوین", asset: AssetType.BITCOIN },
+  // { title: "بیت کوین", asset: AssetType.BTC },
   { title: "طلا ۱۸", asset: AssetType.GOLD18 },
-  { title: "دلار", asset: AssetType.DOLLAR },
+  { title: "دلار", asset: AssetType.USD },
   { title: "سکه", asset: AssetType.COIN },
 ];
 
@@ -58,7 +63,7 @@ async function getTgjuPrices() {
 }
 
 const tgjuService = {
-  title: "Tgju",
+  provider: provider,
   service: getTgjuPrices,
   assets: items.map((x) => x.asset),
 };

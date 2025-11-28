@@ -2,9 +2,14 @@ const axios = require("axios");
 
 const { AssetType } = require("../assetTypes");
 
+const provider = Object.freeze({
+  name: "Nobitex",
+  title: "نوبیتکس",
+});
+
 const items = [
   { asset: AssetType.USDT, symbol: "USDTIRT" },
-  { asset: AssetType.BITCOIN, symbol: "BTCIRT" },
+  { asset: AssetType.BTC, symbol: "BTCIRT" },
 ];
 
 async function getNobitexPrices() {
@@ -45,7 +50,7 @@ async function getNobitexPrices() {
 }
 
 const nobitexService = {
-  title: "Nobitex",
+  provider: provider,
   service: getNobitexPrices,
   assets: items.map((x) => x.asset),
 };
