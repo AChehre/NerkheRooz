@@ -37,27 +37,38 @@ async function getAveragePrices(assets = []) {
   const pricesByAsset = {};
 
   for (const [, data] of results) {
-    if (!data.result.success) continue;
+    if (!data.result?.success) continue;
 
     for (const item of data.result.data) {
-      const assetKey = item.type.symbol; // FIXED → use symbol as key
+      const assetKey = item.type.symbol;
+      const price = item.price;
 
       if (!pricesByAsset[assetKey]) {
         pricesByAsset[assetKey] = [];
       }
 
-      pricesByAsset[assetKey].push(item.price);
+      pricesByAsset[assetKey].push(price);
     }
   }
 
-  const averages = {};
+  const statsByAsset = {};
 
   for (const [asset, prices] of Object.entries(pricesByAsset)) {
-    const avg = prices.reduce((a, b) => a + b, 0) / prices.length;
-    averages[asset] = avg;
+    if (prices.length === 0) continue;
+
+    const min = Math.min(...prices);
+    const max = Math.max(...prices);
+    const avg = prices.reduce((sum, p) => sum + p, 0) / prices.length;
+
+    statsByAsset[asset] = {
+      min,
+      avg,
+      max,
+    };
   }
 
-  return averages;
+  return statsByAsset;
 }
+
 
 module.exports = { getPrices, getAveragePrices };
